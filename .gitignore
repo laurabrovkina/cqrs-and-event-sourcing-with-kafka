@@ -1,0 +1,14 @@
+
+SM-Post/Post.Query/Post.Query.Infrastructure/obj/
+
+SM-Post/Post.Query/Post.Query.Domain/obj/
+
+SM-Post/Post.Query/Post.Query.Api/obj/
+
+SM-Post/Post.Cmd/Post.Cmd.Infrastructure/obj/
+
+SM-Post/Post.Cmd/Post.Cmd.Domain/obj/
+
+SM-Post/Post.Cmd/Post.Cmd.Api/obj/
+
+CQRS-ES/CQRS.Core/obj/
