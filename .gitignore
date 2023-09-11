@@ -12,3 +12,15 @@ SM-Post/Post.Cmd/Post.Cmd.Domain/obj/
 SM-Post/Post.Cmd/Post.Cmd.Api/obj/
 
 CQRS-ES/CQRS.Core/obj/
+
+SM-Post/Post.Cmd/Post.Cmd.Domain/bin/Debug/net6.0/
+
+SM-Post/Post.Query/Post.Query.Domain/bin/Debug/net6.0/
+
+CQRS-ES/CQRS.Core/bin/Debug/net6.0/
+
+SM-Post/Post.Cmd/Post.Cmd.Infrastructure/bin/Debug/net6.0/
+
+SM-Post/Post.Common/obj/
+
+SM-Post/Post.Query/Post.Query.Infrastructure/bin/Debug/net6.0/
