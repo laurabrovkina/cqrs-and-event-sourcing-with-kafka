@@ -24,3 +24,17 @@ SM-Post/Post.Cmd/Post.Cmd.Infrastructure/bin/Debug/net6.0/
 SM-Post/Post.Common/obj/
 
 SM-Post/Post.Query/Post.Query.Infrastructure/bin/Debug/net6.0/
+
+SM-Post/Post.Cmd/Post.Cmd.Api/bin/Debug/net6.0/runtimes/win-x86/native/
+
+SM-Post/Post.Cmd/Post.Cmd.Api/bin/Debug/net6.0/
+
+SM-Post/Post.Common/bin/Debug/net6.0/
+
+SM-Post/Post.Query/Post.Query.Api/bin/Debug/net6.0/
+
+SM-Post/.vs/SM-Post/v17/
+
+SM-Post/.vs/SM-Post/DesignTimeBuild/
+
+.vs/

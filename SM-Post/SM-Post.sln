@@ -3,31 +3,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQRS.Core", "..\CQRS-ES\CQRS.Core\CQRS.Core.csproj", "{A811AE39-8DE5-4C9E-88FC-110506546E17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CQRS.Core", "..\CQRS-ES\CQRS.Core\CQRS.Core.csproj", "{A811AE39-8DE5-4C9E-88FC-110506546E17}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Post.Cmd", "Post.Cmd", "{BE5B8C4C-DCE2-46FE-8EE6-9E5E12B94374}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Post.Cmd.Api", "Post.Cmd\Post.Cmd.Api\Post.Cmd.Api.csproj", "{74BF732F-D347-4D3F-8A4D-679B969FEFEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Post.Cmd.Api", "Post.Cmd\Post.Cmd.Api\Post.Cmd.Api.csproj", "{74BF732F-D347-4D3F-8A4D-679B969FEFEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Post.Cmd.Domain", "Post.Cmd\Post.Cmd.Domain\Post.Cmd.Domain.csproj", "{9A9C284B-F84D-478A-B729-B9E472B50DCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Post.Cmd.Domain", "Post.Cmd\Post.Cmd.Domain\Post.Cmd.Domain.csproj", "{9A9C284B-F84D-478A-B729-B9E472B50DCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Post.Cmd.Infrastructure", "Post.Cmd\Post.Cmd.Infrastructure\Post.Cmd.Infrastructure.csproj", "{594A7A7A-B2C5-494A-9E39-86450F126B55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Post.Cmd.Infrastructure", "Post.Cmd\Post.Cmd.Infrastructure\Post.Cmd.Infrastructure.csproj", "{594A7A7A-B2C5-494A-9E39-86450F126B55}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Post.Query", "Post.Query", "{81167C00-626F-4438-B6C5-547BD628BC90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Post.Query.Api", "Post.Query\Post.Query.Api\Post.Query.Api.csproj", "{780F4CEE-0951-4ECD-9729-BF44009A7D8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Post.Query.Api", "Post.Query\Post.Query.Api\Post.Query.Api.csproj", "{780F4CEE-0951-4ECD-9729-BF44009A7D8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Post.Query.Domain", "Post.Query\Post.Query.Domain\Post.Query.Domain.csproj", "{41BBC412-2198-40A3-8D91-E24C7A52406B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Post.Query.Domain", "Post.Query\Post.Query.Domain\Post.Query.Domain.csproj", "{41BBC412-2198-40A3-8D91-E24C7A52406B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Post.Query.Infrastructure", "Post.Query\Post.Query.Infrastructure\Post.Query.Infrastructure.csproj", "{491D9564-2CF8-4B1C-80D9-3E1F274FB334}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Post.Query.Infrastructure", "Post.Query\Post.Query.Infrastructure\Post.Query.Infrastructure.csproj", "{491D9564-2CF8-4B1C-80D9-3E1F274FB334}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Post.Common", "Post.Common\Post.Common.csproj", "{2D9AFBD8-AFAA-4FD0-9F3E-09D7ABE37E89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A811AE39-8DE5-4C9E-88FC-110506546E17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -58,6 +57,13 @@ Global
 		{491D9564-2CF8-4B1C-80D9-3E1F274FB334}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{491D9564-2CF8-4B1C-80D9-3E1F274FB334}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{491D9564-2CF8-4B1C-80D9-3E1F274FB334}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D9AFBD8-AFAA-4FD0-9F3E-09D7ABE37E89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D9AFBD8-AFAA-4FD0-9F3E-09D7ABE37E89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D9AFBD8-AFAA-4FD0-9F3E-09D7ABE37E89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D9AFBD8-AFAA-4FD0-9F3E-09D7ABE37E89}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{74BF732F-D347-4D3F-8A4D-679B969FEFEF} = {BE5B8C4C-DCE2-46FE-8EE6-9E5E12B94374}
@@ -66,5 +72,8 @@ Global
 		{780F4CEE-0951-4ECD-9729-BF44009A7D8C} = {81167C00-626F-4438-B6C5-547BD628BC90}
 		{41BBC412-2198-40A3-8D91-E24C7A52406B} = {81167C00-626F-4438-B6C5-547BD628BC90}
 		{491D9564-2CF8-4B1C-80D9-3E1F274FB334} = {81167C00-626F-4438-B6C5-547BD628BC90}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AE688D20-69E8-434E-A725-B4E7E6656AE3}
 	EndGlobalSection
 EndGlobal
