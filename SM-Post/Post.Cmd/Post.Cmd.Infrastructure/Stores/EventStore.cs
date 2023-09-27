@@ -4,7 +4,10 @@ using CQRS.Core.Events;
 using CQRS.Core.Exceptions;
 using CQRS.Core.Infrastructure;
 using CQRS.Core.Producers;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 using Post.Cmd.Domain.Aggregates;
+using Post.Cmd.Infrastructure.Config;
 
 namespace Post.Cmd.Infrastructure.Stores;
 
@@ -12,11 +15,13 @@ public class EventStore : IEventStore
 {
     private readonly IEventStoreRepository _eventStoreRepository;
     private readonly IEventProducer _eventProducer;
+    private readonly IMongoClient _mongoClient;
 
-    public EventStore(IEventStoreRepository eventStoreRepository, IEventProducer eventProducer)
+    public EventStore(IEventStoreRepository eventStoreRepository, IEventProducer eventProducer, IOptions<MongoDbConfig> mongoDbConfig)
     {
         _eventStoreRepository = eventStoreRepository;
         _eventProducer = eventProducer;
+        _mongoClient = new MongoClient(mongoDbConfig.Value.ConnectionString);
     }
 
     public async Task<List<BaseEvent>> GetEventsAsync(Guid aggregateId)
@@ -41,6 +46,7 @@ public class EventStore : IEventStore
         }
 
         var version = expectedVersion;
+        var eventModels = new List<EventModel>();
 
         foreach (var @event in events)
         {
@@ -57,10 +63,30 @@ public class EventStore : IEventStore
                 EventData = @event
             };
 
-            await _eventStoreRepository.SaveAsync(eventModel);
+            eventModels.Add(eventModel);
+        }
 
-            var topic = Environment.GetEnvironmentVariable("KAFKA_TOPIC");
-            await _eventProducer.ProduceAsync(topic, @event);
+        using (var session = await _mongoClient.StartSessionAsync())
+        {
+            session.StartTransaction();
+
+            try
+            {
+                foreach (var eventModel in eventModels)
+                {
+                    await _eventStoreRepository.SaveAsync(eventModel);
+
+                    var topic = Environment.GetEnvironmentVariable("KAFKA_TOPIC");
+                    await _eventProducer.ProduceAsync(topic, eventModel.EventData); 
+                }
+
+                await session.CommitTransactionAsync();
+            }
+            catch (Exception ex)
+            {
+                await session.AbortTransactionAsync();
+                throw new Exception("Error saving events to MongoDB", ex);
+            }
         }
     }
 }
