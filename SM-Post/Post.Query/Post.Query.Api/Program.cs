@@ -8,6 +8,10 @@ Action<DbContextOptionsBuilder> configureContext = (o => o.UseLazyLoadingProxies
 builder.Services.AddDbContext<DatabaseContext>(configureContext);
 builder.Services.AddSingleton<DatabaseContextFactory>(new DatabaseContextFactory(configureContext));
 
+// Create database and table from code
+var dataContext = builder.Services.BuildServiceProvider().GetRequiredService<DatabaseContext>();
+dataContext.Database.EnsureCreated();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -23,8 +27,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
-app.MapControllers();
+//app.MapControllers();
 
 app.Run();

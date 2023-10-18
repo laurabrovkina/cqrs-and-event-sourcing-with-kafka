@@ -27,3 +27,20 @@ The second container would be for MSSQL:
 docker run -d --name sql-container --network mydockernetwork --restart always -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=P@$$w0rd1' -e 'MSSQL_PID=Express' -p 1438:1433 mcr.microsoft.com/mssql/server:2017-latest-ubuntu
 ```
 We swap port `1433` to `1438` outside the container because the standard port `1433` for MS SQL is occupied by installed MS SQL on the machine. You can change the value to any free port on your machine.
+
+## Setup Database
+There is a script to create a new database user and set their role to owner:
+```
+Use SocialMedia
+GO
+
+IF NOT EXISTS(SELECT * FROM sys.server_principals WHERE name = 'SMUser')
+BEGIN
+	CREATE LOGIN SMUser WITH PASSWORD=N'SmPA$$06500', DEFAULT_DATABASE=SocialMedia
+END
+
+IF NOT EXISTS(SELECT * FROM sys.server_principals WHERE name = 'SMUser')
+BEGIN
+	EXEC sp_adduser 'SMUser', 'SMUser', 'db_owner';
+END
+```
