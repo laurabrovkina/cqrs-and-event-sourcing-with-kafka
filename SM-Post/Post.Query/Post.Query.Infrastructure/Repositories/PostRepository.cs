@@ -27,7 +27,7 @@ public class PostRepository : IPostRepository
         using DatabaseContext context = _contextFactory.CreateDbContext();
         var post = await GetByIdAsync(postId);
 
-        if (post != null)
+        if (post is null)
         {
             return;
         }
