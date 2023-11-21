@@ -38,3 +38,5 @@ SM-Post/.vs/SM-Post/v17/
 SM-Post/.vs/SM-Post/DesignTimeBuild/
 
 .vs/
+
+*.log

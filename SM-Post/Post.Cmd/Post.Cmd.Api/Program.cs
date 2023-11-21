@@ -36,6 +36,7 @@ dispatcher.RegisterHandler<RemoveCommentCommand>(commandHandler.HandlerAsync);
 dispatcher.RegisterHandler<DeletePostCommand>(commandHandler.HandlerAsync);
 builder.Services.AddSingleton<ICommandDispatcher>(_ => dispatcher);
 
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -49,5 +50,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();
