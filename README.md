@@ -44,3 +44,79 @@ BEGIN
 	EXEC sp_adduser 'SMUser', 'SMUser', 'db_owner';
 END
 ```
+## Docker compose
+The `docker-compose.yml` has been implemented to to run all services at once:
+![running docker containers](./Img/docker-compose.jpg)
+**Note**: docker-compose should be updated to version `v2.23.1`,
+[Install Compose standalone](https://docs.docker.com/compose/install/standalone/).
+
+Run the command `docker-compose up -d` from the `./kafka` folder with the file itself.
+
+There was another challenge to make mongo db work with transactions. 
+![transaction](./Img/transaction.jpg)
+
+**Note**: Mongo DB transaction is required replica set which is spinned up in docker-compose file.
+```
+mongo1:
+    image: mongo:7.0
+    command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
+    ports:
+      - 27017:27017
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'host.docker.internal:27017',priority:1},{_id:1,host:'host.docker.internal:27018',priority:0.5},{_id:2,host:'host.docker.internal:27019',priority:0.5}]}) }" | mongosh --port 27017 --quiet
+      interval: 5s
+      timeout: 30s
+      start_period: 0s
+      start_interval: 1s
+      retries: 30
+    volumes:
+      - "mongo1_data:/data/db"
+      - "mongo1_config:/data/configdb"
+    networks:
+      - parse_network
+  mongo2:
+    image: mongo:7.0
+    command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27018"]
+    depends_on:
+      - mongo1
+    ports:
+      - 27018:27018
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - "mongo2_data:/data/db"
+      - "mongo2_config:/data/configdb"
+    networks:
+      - parse_network
+  mongo3:
+    image: mongo:7.0
+    command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27019"]
+    depends_on:
+      - mongo1
+    ports:
+      - 27019:27019
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - "mongo3_data:/data/db"
+      - "mongo3_config:/data/configdb"
+    networks:
+      - parse_network
+```
+
+For the dependent replica, it is important to have this line:
+```
+    depends_on:
+      - mongo1
+```
+Also, we need to make sure that all our resources are running under the same virtual network:
+```
+    networks:
+      - parse_network
+```
+There are more about yaml file setup in the article [Establishing a Docker-based MongoDB Replica Set](https://copyprogramming.com/howto/setting-up-mongo-replica-set-in-docker)
+
+## Postman collection
+Import the postman collection from [here](./dev-tools/).
