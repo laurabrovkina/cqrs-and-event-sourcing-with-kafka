@@ -11,6 +11,8 @@ services:
       - "zookeeper_data:/bitnami"
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - parse_network
   kafka:
     container_name: kafka-container
     image: bitnami/kafka
@@ -19,6 +21,8 @@ services:
     restart: always
     volumes:
       - "kafka_data:/bitnami"
+    networks:
+      - parse_network
     environment:
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
@@ -36,6 +40,8 @@ services:
       MSSQL_PID: "Express"
     ports:
       - "1438:1433"
+    networks:
+      - parse_network
     restart: always
   mongo1:
     image: mongo:7.0
@@ -54,9 +60,13 @@ services:
     volumes:
       - "mongo1_data:/data/db"
       - "mongo1_config:/data/configdb"
+    networks:
+      - parse_network
   mongo2:
     image: mongo:7.0
     command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27018"]
+    depends_on:
+      - mongo1
     ports:
       - 27018:27018
     extra_hosts:
@@ -64,9 +74,13 @@ services:
     volumes:
       - "mongo2_data:/data/db"
       - "mongo2_config:/data/configdb"
+    networks:
+      - parse_network
   mongo3:
     image: mongo:7.0
     command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27019"]
+    depends_on:
+      - mongo1
     ports:
       - 27019:27019
     extra_hosts:
@@ -74,13 +88,13 @@ services:
     volumes:
       - "mongo3_data:/data/db"
       - "mongo3_config:/data/configdb"
+    networks:
+      - parse_network
+
 volumes:
   zookeeper_data:
-    driver: local
   kafka_data:
-    driver: local
   sqlserver_data:
-    driver: local
   mongo1_data:
   mongo2_data:
   mongo3_data:
@@ -89,6 +103,7 @@ volumes:
   mongo3_config:
 
 networks:
-  default:
-      name: mydockernetwork
-      external: true
+  parse_network:
+    driver: bridge
+    ipam:
+      driver: default
