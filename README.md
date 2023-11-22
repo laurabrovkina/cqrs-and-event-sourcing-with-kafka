@@ -52,7 +52,7 @@ The `docker-compose.yml` has been implemented to to run all services at once:
 
 Run the command `docker-compose up -d` from the `./kafka` folder with the file itself.
 
-There was another challenge to make mongo db work with transactions. 
+There was another challenge to make mongo db work with transactions in `EventStore` class. 
 ![transaction](./Img/transaction.jpg)
 
 **Note**: Mongo DB transaction is required replica set which is spinned up in docker-compose file.
@@ -118,5 +118,14 @@ Also, we need to make sure that all our resources are running under the same vir
 ```
 There are more about yaml file setup in the article [Establishing a Docker-based MongoDB Replica Set](https://copyprogramming.com/howto/setting-up-mongo-replica-set-in-docker)
 
+## Getting records from mango db
+`Studio T3` is used to look the records in mango db.
+Standard command to obtain records from the table:
+```
+db.getCollection("eventStore").find({})
+```
+![mongodb record](./Img/mongodb.jpg)
+You might look into more details of the `event` in `EventData`:
+![eventData](./Img/mongodb_eventData.jpg)
 ## Postman collection
 Import the postman collection from [here](./dev-tools/).
