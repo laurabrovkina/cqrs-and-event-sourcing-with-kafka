@@ -31,6 +31,7 @@ public class NewPostController : ControllerBase
 
             return StatusCode(StatusCodes.Status201Created, new NewPostResponse
             {
+                Id = id,
                 Message = "New post creation request completed successfully!"
             });
 
