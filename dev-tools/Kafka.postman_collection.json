@@ -1,40 +1,107 @@
 {
 	"info": {
-		"_postman_id": "12899b47-eaa7-497c-b189-92930ad0ce9f",
-		"name": "Kafka",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_postman_id": "22a45303-33a7-48a6-8257-0602e3ef5fc7",
+		"name": "Post.Cmd.Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "7134213"
 	},
 	"item": [
 		{
-			"name": "localhost:5010/api/v1/newPost",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"author\": \"John Doe\",\r\n    \"message\": \"#CQRS and #EventSourcing are amazing #Microservices design patterns!\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "api",
+			"item": [
+				{
+					"name": "v1",
+					"item": [
+						{
+							"name": "EditMessage",
+							"item": [
+								{
+									"name": "{id}",
+									"item": [
+										{
+											"name": "/api/v1/EditMessage/:id",
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"message\": \"Updated social media message #DDD\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{api_url}}/api/v1/EditMessage/:id",
+													"host": [
+														"{{api_url}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"EditMessage",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "8F33CAD5-5981-5A4F-A007-053AB17727E3",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "NewPost",
+							"item": [
+								{
+									"name": "{{api_url}}/api/v1/NewPost",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"author\": \"John Doe\",\n  \"message\": \"#CQRS and #EventSourcing are amazimg #Microservices design patterns\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{api_url}}/api/v1/NewPost"
+									},
+									"response": []
+								}
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:5010/api/v1/newPost",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5010",
-					"path": [
-						"api",
-						"v1",
-						"newPost"
 					]
 				}
-			},
-			"response": []
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/"
 		}
 	]
 }
