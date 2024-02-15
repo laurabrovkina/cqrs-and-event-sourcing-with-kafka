@@ -24,11 +24,23 @@ In order to connect to a new mongo db, install one of the clients for it.
 
 The second container would be for MSSQL:
 ```
-docker run -d --name sql-container --network mydockernetwork --restart always -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=P@$$w0rd1' -e 'MSSQL_PID=Express' -p 1438:1433 mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+docker run --name sql-container --network mydockernetwork --restart always -e ACCEPT_EULA=Y -e MSSQL_SA_PASSWORD=MyComplexPassword!234 -e MSSQL_PID=Express -p 1433:1433 -d mcr.microsoft.com/mssql/server
 ```
-We swap port `1433` to `1438` outside the container because the standard port `1433` for MS SQL is occupied by installed MS SQL on the machine. You can change the value to any free port on your machine.
 
 ## Setup Database
+We are using the EF and code to create programmatically required for us Read DB (mssql).
+We need to run the `Post.Query.Api` project for the first time and set up a breakpoint to make sure that the change has been applied successfully:
+![running Post.Query.Api first time](./Img/create-read-db.jpg)
+
+`appsettings.Development.json` should be set to:
+```
+  "ConnectionStrings": {
+    "SqlServer": "Server=localhost,1433;Database=SocialMedia;User Id=sa;Password=MyComplexPassword!234"
+  },
+```
+After the code is executed the new `SocialMedia` should be created on your server:
+![running Post.Query.Api first time](./Img/read-db.jpg)
+
 There is a script to create a new database user and set their role to owner:
 ```
 Use SocialMedia
@@ -44,13 +56,24 @@ BEGIN
 	EXEC sp_adduser 'SMUser', 'SMUser', 'db_owner';
 END
 ```
+The appsettings should be changed accordingly
+```
+"SqlServer": "Server=(localdb)\\mssqllocaldb;Database=SocialMedia;User Id=SMUser;Password=SmPA$$06500;Trusted_Connection=True;Encrypt=False"
+```
+but for the simplicity we use `sa` in the code.
+
 ## Docker compose
-The `docker-compose.yml` has been implemented to to run all services at once:
+The `docker-compose-full.yml` has been implemented to to run all services at once:
 ![running docker containers](./Img/docker-compose.jpg)
 **Note**: docker-compose should be updated to version `v2.23.1`,
 [Install Compose standalone](https://docs.docker.com/compose/install/standalone/).
 
-Run the command `docker-compose up -d` from the `./kafka` folder with the file itself.
+Run the command - `docker-compose up` with `-f` key.
+Note, that the syntax of `docker-compose` is such that `-f` needs to be before `up/down`, and thereafter `-d`:
+```
+docker-compose -f docker-compose-full.yml up -d` 
+```
+The command shoulb be run from the `./kafka` folder with the file that lives there.
 
 There was another challenge to make mongo db work with transactions in `EventStore` class. 
 ![transaction](./Img/transaction.jpg)
