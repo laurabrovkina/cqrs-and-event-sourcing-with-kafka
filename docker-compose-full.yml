@@ -29,6 +29,7 @@ services:
       - KAFKA_LISTENERS=PLAINTEXT://:9092
       - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
       - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
     depends_on:
       - zookeeper
   sqlserver:
@@ -42,6 +43,8 @@ services:
       - "1433:1433"
     networks:
       - parse_network
+    volumes:
+      - "sqlserver_data:/data/db"
     restart: always
   mongo1:
     image: mongo:7.0

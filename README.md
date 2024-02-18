@@ -62,6 +62,23 @@ The appsettings should be changed accordingly
 ```
 but for the simplicity we use `sa` in the code.
 
+**Important**: The file `Post.Query.Api\appsettings.Development.json` should have the setting:
+```
+  "ConsumerConfig": {
+    "GroupId": "SM_Consumer",
+    "BootstrapServers": "localhost:9092",
+    "EnableAutoCommit": false,
+    "AutoOffsetReset": "Earliest",
+    "AllowAutoCreateTopics": true
+  }
+```
+`BootstrapServers` shouldn't have `http` prefix but just point out to the server where it is running like it is shown above `localhost:9092`! The same important setting is on the Producer side:
+```
+  "ProducerConfig": {
+    "BootstrapServers": "localhost:9092"
+  }
+```
+
 ## Docker compose
 The `docker-compose-full.yml` has been implemented to to run all services at once:
 ![running docker containers](./Img/docker-compose.jpg)

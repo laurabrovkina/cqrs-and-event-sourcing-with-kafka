@@ -22,9 +22,9 @@ public class EventConsumer : IEventConsumer
     public void Consume(string topic)
     {
         using var consumer = new ConsumerBuilder<string, string>(_config)
-                    .SetKeyDeserializer(Deserializers.Utf8)
-                    .SetValueDeserializer(Deserializers.Utf8)
-                    .Build();
+                .SetKeyDeserializer(Deserializers.Utf8)
+                .SetValueDeserializer(Deserializers.Utf8)
+                .Build();
 
         consumer.Subscribe(topic);
 
