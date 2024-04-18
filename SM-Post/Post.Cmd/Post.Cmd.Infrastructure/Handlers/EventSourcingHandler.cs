@@ -16,18 +16,18 @@ public class EventSourcingHandler : IEventSourcingHandler<PostAggregate>
 
     public async Task<PostAggregate> GetByIdAsync(Guid aggregateId)
     {
-        var aggregte = new PostAggregate();
+        var aggregate = new PostAggregate();
         var events = await _eventStore.GetEventsAsync(aggregateId);
 
         if (events == null || !events.Any())
         {
-            return aggregte;
+            return aggregate;
         }
 
-        aggregte.ReplayEvents(events);
-        aggregte.Version = events.Select(x => x.Version).Max();
+        aggregate.ReplayEvents(events);
+        aggregate.Version = events.Select(x => x.Version).Max();
 
-        return aggregte;
+        return aggregate;
     }
 
     public async Task SaveAsync(AggregateRoot aggregate)
