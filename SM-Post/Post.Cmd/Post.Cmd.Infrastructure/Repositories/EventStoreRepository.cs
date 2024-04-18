@@ -1,6 +1,7 @@
 using CQRS.Core.Domain;
 using CQRS.Core.Events;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Post.Cmd.Infrastructure.Config;
 
@@ -14,6 +15,9 @@ public class EventStoreRepository : IEventStoreRepository
     {
         var mongoClient = new MongoClient(config.Value.ConnectionString);
         var mongoDatabase = mongoClient.GetDatabase(config.Value.Database);
+        BsonClassMap.RegisterClassMap<EventModel>(cm => {
+            cm.SetIsRootClass(true);
+        });
 
         _eventStoreCollection = mongoDatabase.GetCollection<EventModel>(config.Value.Collection);
     }
